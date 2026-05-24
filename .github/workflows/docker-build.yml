@@ -1,31 +1,29 @@
 name: Docker Build CI
 
-# O pipeline roda a cada push ou Pull Request na branch main
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
+# Força o runner do GitHub a executar todas as ações usando o Node.js 24 (Padrão 2026)
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Faz o checkout do seu código privado/pessoal no runner
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # 2. Configura o QEMU para permitir builds multi-plataforma se necessário (ex: buildar para ARM64/AWS Graviton no futuro)
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
 
-    # 3. Configura o Docker Buildx (essencial para usar cache avançado e o build standalone do Next.js)
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    # 4. Configura o cache do Docker para o GitHub Actions. 
-    # Isso faz com que os próximos builds levem segundos em vez de minutos, reutilizando camadas que não mudaram.
     - name: Cache Docker layers
       uses: actions/cache@v4
       with:
@@ -34,18 +32,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildx-
 
-    # 5. Executa o build da imagem testando o Dockerfile multi-stage que criamos
     - name: Build Docker Image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: ./Dockerfile
-        push: false # Deixamos como false para apenas testar o build sem expor a imagem publicamente
+        push: false
         tags: emanuelynerys/site-consultoria:latest
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
-    # 6. Atualiza o cache do Buildx para o próximo run
     - name: Move cache
       run: |
         rm -rf /tmp/.buildx-cache
