@@ -18,7 +18,7 @@ export default function Home() {
                 Arquitetura cloud sólida, com automação e segurança para sua operação crescer sem sustos.
               </h1>
               <p className="text-lg text-slate-300 max-w-2xl">
-                Sou Emanuel — Cloud & DevOps com foco em AWS e Kubernetes. Entrego automação, observabilidade e operações seguras para times que querem escalar sem dor.
+                Sou Emanuel — Cloud & DevOps com foco em AWS e Kubernetes. Tenho mais de 2 anos de experiência, trabalho com GitOps e infraestrutura como código (IaC). Entrego automação, observabilidade e operações seguras para times que querem escalar sem dor.
               </p>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <a
@@ -35,7 +35,7 @@ export default function Home() {
                 </a>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mt-10">
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mt-6">
                 <div className="rounded-3xl border border-slate-800/80 bg-slate-900/70 p-6 text-white shadow-lg shadow-slate-950/20">
                   <p className="text-sm uppercase tracking-[0.24em] text-slate-400 mb-3">Anos em DevOps</p>
                   <p className="text-4xl font-semibold">2+</p>
@@ -48,12 +48,12 @@ export default function Home() {
                 </div>
                 <div className="rounded-3xl border border-slate-800/80 bg-slate-900/70 p-6 text-white shadow-lg shadow-slate-950/20">
                   <p className="text-sm uppercase tracking-[0.24em] text-slate-400 mb-3">Stack principal</p>
-                  <p className="text-4xl font-semibold">Kubernetes</p>
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight break-words">Kubernetes</p>
                   <p className="mt-2 text-sm text-slate-400">EKS e orquestração cloud-native</p>
                 </div>
                 <div className="rounded-3xl border border-slate-800/80 bg-slate-900/70 p-6 text-white shadow-lg shadow-slate-950/20">
                   <p className="text-sm uppercase tracking-[0.24em] text-slate-400 mb-3">Infra como código</p>
-                  <p className="text-4xl font-semibold">Terraform</p>
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight break-words">Terraform</p>
                   <p className="mt-2 text-sm text-slate-400">infraestrutura segura e repetível</p>
                 </div>
               </div>
