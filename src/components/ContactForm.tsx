@@ -127,19 +127,10 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            Vamos Transformar Sua<br />
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              Infraestrutura
-            </span>
-          </h1>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Entre em contato para uma análise inicial da sua arquitetura cloud e práticas de DevOps
-          </p>
+        <div className="mb-8 text-sm text-slate-300 text-center">
+          Preencha o formulário abaixo para solicitar sua análise gratuita.
         </div>
 
         {/* Main Content */}
@@ -306,44 +297,44 @@ export default function ContactForm() {
             <div className="sticky top-8 space-y-6">
               
               {/* Profile Card / Sobre */}
-              <div className="bg-gradient-to-br from-slate-800/60 to-slate-900/60 backdrop-blur-xl border border-slate-700 rounded-2xl p-6 shadow-xl">
-                <div className="border-b border-slate-700/60 pb-4 mb-4">
-                  <h3 className="text-lg font-bold text-white mb-1">Emanuel</h3>
-                  <p className="text-xs font-medium text-cyan-400 uppercase tracking-wider">
-                    DevOps, Cloud & SRE
-                  </p>
+              <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-700 rounded-3xl p-6 shadow-xl shadow-slate-950/30">
+                <div className="border-b border-slate-700/70 pb-4 mb-4">
+                  <h3 className="text-lg font-semibold text-white mb-1">Emanuel</h3>
+                  <p className="text-xs font-medium text-cyan-300 uppercase tracking-[0.3em]">DevOps, Cloud & SRE</p>
                 </div>
 
                 <div className="space-y-4 text-gray-300 text-sm leading-relaxed">
                   <p>
-                    Olá! Sou o profissional de tecnologia focado em cultura{' '}
-                    <span className="text-purple-400 font-medium">DevOps, Cloud Computing e Engenharia de Confiabilidade (SRE)</span>. 
-                    Minha missão é desenhar e implementar arquiteturas de nuvem que sejam escaláveis, seguras, resilientes e totalmente automatizadas.
-                  </p>
-                  
-                  <p>
-                    Apoiado pela certificação <span className="text-cyan-400 font-medium inline-flex items-center gap-1"><Award size={14}/>AWS Certified Cloud Practitioner</span> — e expandindo meu escopo para a <em>AWS Certified Solutions Architect – Associate</em> —, atuo fortemente no ecossistema AWS e orquestração com Kubernetes.
+                    Sou profissional de DevOps, Cloud e SRE com foco em AWS e Kubernetes. Ajudo equipes a implantar automação e confiabilidade na nuvem.
                   </p>
 
-                  <p className="text-xs italic text-gray-400 bg-slate-950/40 p-3 rounded-lg border border-slate-800">
-                    "Movido pelo desafio de reduzir o Time-to-Market dos produtos, garantir resiliência e disseminar automação em ambientes corporativos."
+                  <p>
+                    Certificado AWS Certified Cloud Practitioner e em transição para AWS Certified Solutions Architect – Associate.
+                  </p>
+
+                  <p className="text-xs italic text-slate-400 bg-slate-950/40 p-3 rounded-2xl border border-slate-800">
+                    "Reduzo o Time-to-Market com operações seguras, resilientes e previsíveis."
                   </p>
                 </div>
 
-                {/* LinkedIn Button */}
-                <a
-                  href="https://www.linkedin.com/in/seu-perfil" // TODO: Substitua pelo seu link real do perfil público
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0077B5] hover:bg-[#005582] text-white font-semibold rounded-lg transition-colors shadow-sm text-sm group"
-                >
-                  {/* SVG Nativo do LinkedIn */}
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                  </svg>
-                  <span>Conectar no LinkedIn</span>
-                  <span className="group-hover:translate-x-0.5 transition-transform text-xs opacity-70">↗</span>
-                </a>
+                <div className="mt-6 grid gap-3 text-sm text-gray-200">
+                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-4">
+                    <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400 mb-2">Email</p>
+                    <a href="mailto:emanuelnerys@gmail.com" className="block text-cyan-300 font-medium hover:text-cyan-200 break-all">
+                      emanuelnerys@gmail.com
+                    </a>
+                  </div>
+                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-4">
+                    <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400 mb-2">LinkedIn</p>
+                    <a href="https://www.linkedin.com/in/emanuel-nerys" target="_blank" rel="noopener noreferrer" className="block text-cyan-300 font-medium hover:text-cyan-200 break-all">
+                      linkedin.com/in/emanuel-nerys
+                    </a>
+                  </div>
+                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-4">
+                    <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400 mb-2">Localização</p>
+                    <p className="font-medium text-white">João Pessoa, PB</p>
+                  </div>
+                </div>
               </div>
 
               {/* Hard Skills & Tools Card */}
