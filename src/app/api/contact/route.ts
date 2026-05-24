@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 interface ContactFormData {
-  fullName: string;
   email: string;
-  company?: string;
-  bottleneck: string;
   message: string;
+  fullName?: string;
+  company?: string;
+  bottleneck?: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const body: ContactFormData = await request.json();
 
     // Validate required fields
-    if (!body.fullName || !body.email || !body.message || !body.bottleneck) {
+    if (!body.email || !body.message) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }

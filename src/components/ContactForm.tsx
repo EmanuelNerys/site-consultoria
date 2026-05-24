@@ -1,13 +1,10 @@
 'use client';
 
-import { useState, FormEvent, ChangeEvent } from 'react';
-import { CheckCircle, AlertCircle, Loader, Award, Cpu } from 'lucide-react';
+import { useState, FormEvent, ChangeEvent, FocusEvent } from 'react';
+import { CheckCircle, AlertCircle, Loader, Cpu } from 'lucide-react';
 
 interface FormData {
-  fullName: string;
   email: string;
-  company: string;
-  bottleneck: string;
   message: string;
 }
 
@@ -16,32 +13,18 @@ interface FormStatus {
   message?: string;
 }
 
-const bottleneckOptions = [
-  { value: 'finops', label: 'Custos Cloud Altos (FinOps)' },
-  { value: 'cicd', label: 'Lentidão nos Deploys (CI/CD)' },
-  { value: 'stability', label: 'Instabilidade/Quedas no Sistema' },
-  { value: 'migration', label: 'Migração para Nuvem' },
-  { value: 'other', label: 'Outros' },
-];
-
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
-    fullName: '',
     email: '',
-    company: '',
-    bottleneck: 'finops',
     message: '',
   });
 
   const [status, setStatus] = useState<FormStatus>({ type: 'idle' });
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof FormData, boolean>>>({});
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
-
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Nome completo é obrigatório';
-    }
 
     if (!formData.email.trim()) {
       newErrors.email = 'E-mail é obrigatório';
@@ -75,6 +58,13 @@ export default function ContactForm() {
     }
   };
 
+  const handleBlur = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name } = e.target as HTMLInputElement & HTMLTextAreaElement & HTMLSelectElement;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -105,10 +95,7 @@ export default function ContactForm() {
           message: data.message || 'Formulário enviado com sucesso!',
         });
         setFormData({
-          fullName: '',
           email: '',
-          company: '',
-          bottleneck: 'finops',
           message: '',
         });
         setTimeout(() => setStatus({ type: 'idle' }), 5000);
@@ -127,39 +114,28 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 sm:px-6 lg:px-8">
+    <div id="contact" className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8 text-sm text-slate-300 text-center">
-          Preencha o formulário abaixo para solicitar sua análise gratuita.
+        <div className="mb-8 rounded-3xl bg-slate-900/70 p-8 text-center text-slate-300 shadow-lg shadow-slate-950/20">
+          <p className="text-xs uppercase tracking-[0.32em] text-cyan-300">Entre em contato</p>
+          <h2 className="mt-4 text-3xl sm:text-4xl font-semibold text-white">
+            Vamos conversar sobre a sua plataforma.
+          </h2>
+          <p className="mt-4 mx-auto max-w-2xl text-slate-400">
+            Aberto a vagas sênior em DevOps e Engenharia de Plataforma, e a consultoria a partir de duas semanas.
+          </p>
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_340px] gap-6">
           {/* Contact Form */}
-          <div className="lg:col-span-2">
+          <div>
             <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700 rounded-2xl p-8 shadow-2xl">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Full Name */}
-                <div>
-                  <label htmlFor="fullName" className="block text-sm font-semibold text-gray-100 mb-2">
-                    Nome Completo <span className="text-cyan-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    placeholder="João Silva"
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all"
-                  />
-                  {errors.fullName && <p className="text-red-400 text-sm mt-1">{errors.fullName}</p>}
-                </div>
-
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-semibold text-gray-100 mb-2">
-                    E-mail Corporativo <span className="text-cyan-400">*</span>
+                    Email <span className="text-cyan-400">*</span>
                   </label>
                   <input
                     type="email"
@@ -167,52 +143,10 @@ export default function ContactForm() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="joao@empresa.com"
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all"
+                    placeholder="seu@email.com"
+                    className="w-full rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-4 text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
                   />
-                  {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
-                </div>
-
-                {/* Company Name */}
-                <div>
-                  <label htmlFor="company" className="block text-sm font-semibold text-gray-100 mb-2">
-                    Nome da Empresa
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    placeholder="Sua Empresa Ltda"
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
-                  />
-                </div>
-
-                {/* Bottleneck Select */}
-                <div>
-                  <label htmlFor="bottleneck" className="block text-sm font-semibold text-gray-100 mb-2">
-                    Qual o principal gargalo atual?
-                  </label>
-                  <select
-                    id="bottleneck"
-                    name="bottleneck"
-                    value={formData.bottleneck}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all appearance-none cursor-pointer"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2306b6d4' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'right 1rem center',
-                      paddingRight: '2.5rem',
-                    }}
-                  >
-                    {bottleneckOptions.map((option) => (
-                      <option key={option.value} value={option.value} className="bg-slate-800">
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+                  {errors.email && <p className="mt-2 text-sm text-red-400">{errors.email}</p>}
                 </div>
 
                 {/* Message */}
@@ -225,13 +159,14 @@ export default function ContactForm() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Descreva sua situação atual, objetivos e desafios técnicos..."
-                    rows={5}
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all resize-none"
+                    onBlur={handleBlur}
+                    placeholder="Uma frase sobre o problema que você está resolvendo."
+                    rows={6}
+                    className="w-full rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-4 text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 resize-none"
                   />
                   <div className="flex justify-between mt-2">
                     <p className="text-sm text-gray-500">
-                      {formData.message.length < 10 && (
+                      {touched.message && formData.message.length < 10 && (
                         <span className="text-red-400">Mínimo de 10 caracteres</span>
                       )}
                       {formData.message.length >= 10 && <span className="text-cyan-400">✓</span>}
@@ -266,19 +201,9 @@ export default function ContactForm() {
                 <button
                   type="submit"
                   disabled={status.type === 'loading'}
-                  className="w-full py-3 px-4 bg-gradient-to-r from-cyan-400 to-purple-500 hover:from-cyan-300 hover:to-purple-400 text-slate-950 font-semibold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                  className="w-full rounded-2xl bg-gradient-to-r from-orange-500 to-pink-500 px-6 py-4 text-sm font-semibold text-slate-950 transition hover:from-orange-400 hover:to-pink-400 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {status.type === 'loading' ? (
-                    <>
-                      <Loader size={20} className="animate-spin" />
-                      <span>Enviando...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Solicitar Análise Gratuita</span>
-                      <span className="group-hover:translate-x-1 transition-transform">→</span>
-                    </>
-                  )}
+                  {status.type === 'loading' ? 'Enviando...' : 'Enviar mensagem'}
                 </button>
 
                 {/* Trust Statement */}
@@ -294,75 +219,39 @@ export default function ContactForm() {
 
           {/* Support Sidebar (Emanuel Profile) */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 space-y-6">
+            <div className="sticky top-6 space-y-4">
               
               {/* Profile Card / Sobre */}
-              <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-700 rounded-3xl p-6 shadow-xl shadow-slate-950/30">
-                <div className="border-b border-slate-700/70 pb-4 mb-4">
-                  <h3 className="text-lg font-semibold text-white mb-1">Emanuel</h3>
-                  <p className="text-xs font-medium text-cyan-300 uppercase tracking-[0.3em]">DevOps, Cloud & SRE</p>
+              <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-700 rounded-2xl p-4 shadow-xl shadow-slate-950/20">
+                <div className="border-b border-slate-700/70 pb-3 mb-3">
+                  <h3 className="text-base font-semibold text-white mb-0.5">Emanuel</h3>
+                  <p className="text-[10px] font-medium text-cyan-300 uppercase tracking-[0.3em]">DevOps, Cloud & SRE</p>
                 </div>
 
-                <div className="space-y-4 text-gray-300 text-sm leading-relaxed">
-                  <p>
-                    Sou profissional de DevOps, Cloud e SRE com foco em AWS e Kubernetes. Ajudo equipes a implantar automação e confiabilidade na nuvem.
-                  </p>
+                {/* Descrição do perfil removida por solicitação - mantido apenas nome, cargo e contatos */}
 
-                  <p>
-                    Certificado AWS Certified Cloud Practitioner e em transição para AWS Certified Solutions Architect – Associate.
-                  </p>
-
-                  <p className="text-xs italic text-slate-400 bg-slate-950/40 p-3 rounded-2xl border border-slate-800">
-                    "Reduzo o Time-to-Market com operações seguras, resilientes e previsíveis."
-                  </p>
-                </div>
-
-                <div className="mt-6 grid gap-3 text-sm text-gray-200">
-                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-4">
-                    <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400 mb-2">Email</p>
-                    <a href="mailto:emanuelnerys@gmail.com" className="block text-cyan-300 font-medium hover:text-cyan-200 break-all">
+                <div className="mt-4 grid gap-2 text-sm text-gray-200">
+                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-3">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400 mb-1">Email</p>
+                    <a href="mailto:emanuelnerys@gmail.com" className="block text-cyan-300 font-medium hover:text-cyan-200 break-all text-sm">
                       emanuelnerys@gmail.com
                     </a>
                   </div>
-                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-4">
-                    <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400 mb-2">LinkedIn</p>
-                    <a href="https://www.linkedin.com/in/emanuel-nerys" target="_blank" rel="noopener noreferrer" className="block text-cyan-300 font-medium hover:text-cyan-200 break-all">
+                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-3">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400 mb-1">LinkedIn</p>
+                    <a href="https://www.linkedin.com/in/emanuel-nerys" target="_blank" rel="noopener noreferrer" className="block text-cyan-300 font-medium hover:text-cyan-200 break-all text-sm">
                       linkedin.com/in/emanuel-nerys
                     </a>
                   </div>
-                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-4">
-                    <p className="text-[11px] uppercase tracking-[0.25em] text-slate-400 mb-2">Localização</p>
-                    <p className="font-medium text-white">João Pessoa, PB</p>
+                  <div className="rounded-2xl bg-slate-950/70 border border-slate-700 p-3">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400 mb-1">Localização</p>
+                    <p className="font-medium text-white text-sm">João Pessoa, PB</p>
                   </div>
                 </div>
               </div>
 
               {/* Hard Skills & Tools Card */}
-              <div className="bg-gradient-to-br from-slate-800/40 to-purple-950/20 backdrop-blur-xl border border-slate-700/60 rounded-2xl p-6 shadow-xl">
-                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <Cpu size={16} className="text-purple-400" />
-                  Ecossistema Técnico
-                </h4>
-                
-                <div className="space-y-3 text-xs text-gray-300">
-                  <div>
-                    <span className="block font-semibold text-gray-100 mb-1">Nuvem e Core:</span>
-                    <p className="text-gray-400">AWS (EC2, S3, RDS, EKS, IAM) e Kubernetes (K8s)</p>
-                  </div>
-                  <div>
-                    <span className="block font-semibold text-gray-100 mb-1">IaC / CI/CD:</span>
-                    <p className="text-gray-400">Terraform, CloudFormation, GitLab CI e GitHub Actions</p>
-                  </div>
-                  <div>
-                    <span className="block font-semibold text-gray-100 mb-1">Containers & Observabilidade:</span>
-                    <p className="text-gray-400">Docker, Prometheus, Grafana, Zabbix, Loki e Kibana (ELK)</p>
-                  </div>
-                  <div>
-                    <span className="block font-semibold text-gray-100 mb-1">Fundamentos:</span>
-                    <p className="text-gray-400">Linux Avançado, Redes e Segurança da Informação</p>
-                  </div>
-                </div>
-              </div>
+              {/* Ecossistema Técnico removido por solicitação - mantemos apenas contato (email/linkedin/localização) */}
 
             </div>
           </div>
