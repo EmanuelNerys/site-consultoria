@@ -18,7 +18,7 @@ export default function Home() {
                 Arquitetura cloud sólida, com automação e segurança para sua operação crescer sem sustos.
               </h1>
               <p className="text-lg text-slate-300 max-w-2xl">
-                Sou Emanuel — Cloud & DevOps com foco em AWS e Kubernetes. Tenho mais de 2 anos de experiência, trabalho com GitOps e infraestrutura como código (IaC). Entrego automação, observabilidade e operações seguras para times que querem escalar sem dor.
+                Sou Emanuel Nerys, Arquiteto Cloud e SRE. Ajudo equipes a construir plataformas cloud seguras, escaláveis e fáceis de operar.
               </p>
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <a
@@ -28,7 +28,7 @@ export default function Home() {
                   Entre em contato
                 </a>
                 <a
-                  href="#contato"
+                  href="/sobre"
                   className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/80 px-7 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
                 >
                   Ver experiência

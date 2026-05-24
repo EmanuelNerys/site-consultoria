@@ -15,7 +15,7 @@ export default function Header() {
           <nav className="hidden md:flex items-center gap-2 text-sm text-slate-300">
             <Link href="#" className="hover:text-white">Trabalhos</Link>
             <Link href="#" className="hover:text-white">Textos</Link>
-            <Link href="#" className="hover:text-white">Sobre</Link>
+            <Link href="/sobre" className="hover:text-white">Sobre</Link>
           </nav>
 
           {/* Right: Language toggle + Contact button */}
