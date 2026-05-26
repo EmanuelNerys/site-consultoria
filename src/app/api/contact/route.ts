@@ -27,10 +27,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message must be at least 10 characters' }, { status: 400 });
     }
 
-    // === INSTANCIAÇÃO RUNTIME SEGURA ===
-    // Movido para dentro do método POST. O Next.js não executa este bloco durante o 'next build'.
-    const apiKey = process.env.RESEND_API_KEY || 're_fallback_key_just_for_build';
-    const resend = new Resend(apiKey);
+    // === INICIALIZAÇÃO RUNTIME SEGURA ===
+    // Instanciado estritamente dentro do método POST. O processo estático do 'next build' ignora essa linha.
+    const resendApiKey = process.env.RESEND_API_KEY || 're_fallback_key_just_for_build';
+    const resend = new Resend(resendApiKey);
 
     const toEmail = process.env.CONTACT_NOTIFICATION_EMAIL || 'emanuelnerys@gmail.com';
 
