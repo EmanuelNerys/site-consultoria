@@ -13,8 +13,10 @@ export default function Header() {
 
           {/* Center: Nav */}
           <nav className="hidden md:flex items-center gap-2 text-sm text-slate-300">
-            <Link href="#" className="hover:text-white">Trabalhos</Link>
-            <Link href="#" className="hover:text-white">Textos</Link>
+            <Link href="/" className="hover:text-white">Início</Link>
+            <Link href="#" className="hover:text-white">Cases</Link>
+            {/* O link 'Textos' foi removido daqui para deixar o menu mais enxuto */}
+            <Link href="/artigos" className="hover:text-white">Artigos</Link>
             <Link href="/sobre" className="hover:text-white">Sobre</Link>
           </nav>
 
