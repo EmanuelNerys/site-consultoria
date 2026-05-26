@@ -14,6 +14,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Captura a variável enviada pelo GitHub Actions e expõe no ambiente de Build
+ARG RESEND_API_KEY
+ENV RESEND_API_KEY=$RESEND_API_KEY
+
 # Variável de ambiente para desativar a telemetria do Next.js no build
 ENV NEXT_TELEMETRY_DISABLED=1
 
