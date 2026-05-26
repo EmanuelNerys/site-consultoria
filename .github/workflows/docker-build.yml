@@ -48,6 +48,9 @@ jobs:
           emanuelnerys/registry-consultoria:${{ github.sha }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+        # Injeta uma chave dummy em tempo de build para evitar o crash do construtor do Resend
+        build-args: |
+          RESEND_API_KEY=re_dummy_key_just_for_github_actions_build
 
     - name: Move cache
       run: |
