@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
   try {
     const body: ContactFormData = await request.json();
 
-    // 1. Validações básicas (E-mail e Mensagem)
+    // 1. Validações de campos obrigatórios
     if (!body.email || !body.message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
@@ -27,14 +27,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message must be at least 10 characters' }, { status: 400 });
     }
 
-    // === INICIALIZAÇÃO SEGURA PARA O BUILD DO NEXT.JS ===
-    // Se a chave não existir (caso do Build na Pipeline), o fallback previne o crash.
-    const apiKey = process.env.RESEND_API_KEY || 're_fallback_key_for_build';
+    // === INSTANCIAÇÃO RUNTIME SEGURA ===
+    // Movido para dentro do método POST. O Next.js não executa este bloco durante o 'next build'.
+    const apiKey = process.env.RESEND_API_KEY || 're_fallback_key_just_for_build';
     const resend = new Resend(apiKey);
 
     const toEmail = process.env.CONTACT_NOTIFICATION_EMAIL || 'emanuelnerys@gmail.com';
 
-    // 2. Disparo do e-mail
+    // 2. Disparo do e-mail com Resend
     await resend.emails.send({
       from: 'NerysTech Portfolio <onboarding@resend.dev>',
       to: toEmail,
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
           <div style="margin-top: 20px; background: #ffffff; padding: 20px; border-radius: 12px;">
             <p><strong>E-mail do cliente:</strong> ${body.email}</p>
             <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 20px 0;" />
-            <div style="background-color: #f1f5f9; padding: 15px; border-radius: 8px;">${body.message}</div>
+            <div style="background-color: #f1f5f9; padding: 15px; border-radius: 8px; white-space: pre-wrap;">${body.message}</div>
           </div>
         </div>
       `,
